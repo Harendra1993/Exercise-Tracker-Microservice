@@ -178,7 +178,8 @@ app.get('/api/exercise/log', function (req, res, next) {
     }
 
     const fields = 'description duration date';
-    const query = Log.find(filter, fields).lean();
+    const options = {sort: {date: -1}};
+    const query = Log.find(filter, fields, options).lean();
 
     if (req.query.limit) {
       const limit = parseInt(req.query.limit);
@@ -187,7 +188,7 @@ app.get('/api/exercise/log', function (req, res, next) {
 
     query.exec(function(error, posts) {
 
-      console.log(error);
+      //console.log(error);
       if (error) return next(error);
 
       for (let post of posts) {
